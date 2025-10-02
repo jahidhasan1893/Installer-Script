@@ -15,7 +15,7 @@
       "build_dependencies": [
         "build-essential", "libssl-dev", "zlib1g-dev", "libbz2-dev",
         "libreadline-dev", "libsqlite3-dev", "curl", "libncursesw5-dev",
-        "xz-utils", "tk-dev", "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev"
+        "xz-utils", "tk-dev", "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev", "libxslt1-dev"
       ]
     },
     "venv_path": "$USER_HOME/pentest-venv"
@@ -27,27 +27,27 @@
         "enabled": true,
         "type": "go",
         "install_cmd": "go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest",
-        "verify_cmd": "nuclei -version",
+        "verify_cmd": "which nuclei",
         "description": "Modern vulnerability scanner"
       },
       "ffuf": {
         "enabled": true,
         "type": "go",
         "install_cmd": "go install github.com/ffuf/ffuf/v2@latest",
-        "verify_cmd": "ffuf -V",
+        "verify_cmd": "which ffuf",
         "description": "Fast web fuzzer"
       },
       "arjun": {
         "enabled": true,
         "type": "custom",
-        "install_cmd": "git clone --depth 1 https://github.com/s0md3v/arjun.git /opt/arjun && cd /opt/arjun && pip3 install .",
+        "install_cmd": "rm -rf /opt/arjun && git clone --depth 1 https://github.com/s0md3v/arjun.git /opt/arjun && cd /opt/arjun && pip3 install .",
         "verify_cmd": "arjun --help",
         "description": "HTTP parameter discovery"
       },
       "paramspider": {
         "enabled": true,
         "type": "custom",
-        "install_cmd": "git clone --depth 1 https://github.com/devanshbatham/ParamSpider.git /opt/paramspider && cd /opt/paramspider && pip3 install .",
+        "install_cmd": "rm -rf /opt/paramspider && git clone --depth 1 https://github.com/devanshbatham/ParamSpider.git /opt/paramspider && cd /opt/paramspider && pip3 install .",
         "verify_cmd": "paramspider --help",
         "description": "Parameter mining tool"
       },
@@ -55,7 +55,7 @@
         "enabled": true,
         "type": "go",
         "install_cmd": "go install github.com/hahwul/dalfox/v2@latest",
-        "verify_cmd": "dalfox version",
+        "verify_cmd": "which dalfox",
         "description": "XSS vulnerability scanner"
       },
       "sqlmap": {
@@ -81,56 +81,56 @@
         "enabled": true,
         "type": "go",
         "install_cmd": "go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest",
-        "verify_cmd": "subfinder -version",
+        "verify_cmd": "which subfinder",
         "description": "Subdomain discovery tool"
       },
       "assetfinder": {
         "enabled": true,
         "type": "go",
         "install_cmd": "go install github.com/tomnomnom/assetfinder@latest",
-        "verify_cmd": "assetfinder --help",
+        "verify_cmd": "which assetfinder",
         "description": "Domain enumeration tool"
       },
       "amass": {
         "enabled": true,
         "type": "go",
         "install_cmd": "go install -v github.com/owasp-amass/amass/v4/...@master",
-        "verify_cmd": "amass -version",
+        "verify_cmd": "which amass",
         "description": "Attack surface mapping"
       },
       "httpx": {
         "enabled": true,
         "type": "go",
         "install_cmd": "go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest",
-        "verify_cmd": "httpx -version",
+        "verify_cmd": "which httpx",
         "description": "HTTP toolkit"
       },
       "waybackurls": {
         "enabled": true,
         "type": "go",
         "install_cmd": "go install github.com/tomnomnom/waybackurls@latest",
-        "verify_cmd": "waybackurls --help",
+        "verify_cmd": "which waybackurls",
         "description": "Fetch URLs from Wayback Machine"
       },
       "gau": {
         "enabled": true,
         "type": "go",
         "install_cmd": "go install github.com/lc/gau/v2/cmd/gau@latest",
-        "verify_cmd": "gau --help",
+        "verify_cmd": "which gau",
         "description": "Get All URLs from multiple sources"
       },
       "katana": {
         "enabled": true,
         "type": "go",
         "install_cmd": "go install github.com/projectdiscovery/katana/cmd/katana@latest",
-        "verify_cmd": "katana -version",
+        "verify_cmd": "which katana",
         "description": "Next-generation crawling and spidering"
       },
       "naabu": {
         "enabled": true,
         "type": "go",
         "install_cmd": "go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest",
-        "verify_cmd": "naabu -version",
+        "verify_cmd": "which naabu",
         "description": "Fast port scanner"
       }
     }
@@ -162,7 +162,7 @@
       "cloudsploit": {
         "enabled": true,
         "type": "custom",
-        "install_cmd": "git clone --depth 1 https://github.com/aquasecurity/cloudsploit.git /opt/cloudsploit && cd /opt/cloudsploit && npm install",
+        "install_cmd": "rm -rf /opt/cloudsploit && git clone --depth 1 https://github.com/aquasecurity/cloudsploit.git /opt/cloudsploit && cd /opt/cloudsploit && npm install",
         "verify_cmd": "test -d /opt/cloudsploit",
         "description": "Cloud security and compliance scanning"
       }
@@ -221,14 +221,14 @@
       "responder": {
         "enabled": true,
         "type": "custom",
-        "install_cmd": "git clone --depth 1 https://github.com/lgandx/Responder.git /opt/Responder",
+        "install_cmd": "rm -rf /opt/Responder && git clone --depth 1 https://github.com/lgandx/Responder.git /opt/Responder",
         "verify_cmd": "test -f /opt/Responder/Responder.py",
         "description": "LLMNR/NBT-NS/MDNS poisoner"
       },
       "enum4linux-ng": {
         "enabled": true,
         "type": "custom",
-        "install_cmd": "git clone --depth 1 https://github.com/cddmp/enum4linux-ng.git /opt/enum4linux-ng && cd /opt/enum4linux-ng && pip3 install .",
+        "install_cmd": "rm -rf /opt/enum4linux-ng && git clone --depth 1 https://github.com/cddmp/enum4linux-ng.git /opt/enum4linux-ng && cd /opt/enum4linux-ng && pip3 install .",
         "verify_cmd": "enum4linux-ng --help",
         "description": "Windows/Samba enumeration"
       }
@@ -273,7 +273,7 @@
       "kiterunner": {
         "enabled": true,
         "type": "custom",
-        "install_cmd": "git clone --depth 1 https://github.com/assetnote/kiterunner.git /opt/kiterunner && cd /opt/kiterunner && make build && ln -sf /opt/kiterunner/dist/kr /usr/local/bin/kr",
+        "install_cmd": "rm -rf /opt/kiterunner && git clone --depth 1 https://github.com/assetnote/kiterunner.git /opt/kiterunner && cd /opt/kiterunner && make build && ln -sf /opt/kiterunner/dist/kr /usr/local/bin/kr",
         "verify_cmd": "kr --help",
         "description": "API endpoint discovery"
       },
@@ -287,7 +287,7 @@
       "jwt_tool": {
         "enabled": true,
         "type": "custom",
-        "install_cmd": "git clone --depth 1 https://github.com/ticarpi/jwt_tool.git /opt/jwt_tool && cd /opt/jwt_tool && pip3 install -r requirements.txt && ln -s /opt/jwt_tool/jwt_tool.py /usr/local/bin/jwt_tool",
+        "install_cmd": "rm -rf /opt/jwt_tool && git clone --depth 1 https://github.com/ticarpi/jwt_tool.git /opt/jwt_tool && cd /opt/jwt_tool && pip3 install -r requirements.txt && ln -s /opt/jwt_tool/jwt_tool.py /usr/local/bin/jwt_tool",
         "verify_cmd": "jwt_tool --help",
         "description": "Toolkit for validating, forging, scanning and tampering JWTs"
       }
@@ -306,7 +306,7 @@
       "docker-bench-security": {
         "enabled": true,
         "type": "custom",
-        "install_cmd": "git clone --depth 1 https://github.com/docker/docker-bench-security.git /opt/docker-bench-security",
+        "install_cmd": "rm -rf /opt/docker-bench-security && git clone --depth 1 https://github.com/docker/docker-bench-security.git /opt/docker-bench-security",
         "verify_cmd": "test -f /opt/docker-bench-security/docker-bench-security.sh",
         "description": "Docker security auditing"
       }
@@ -344,7 +344,7 @@
       "crackmapexec": {
         "enabled": true,
         "type": "custom",
-        "install_cmd": "git clone --depth 1 https://github.com/byt3bl33d3r/CrackMapExec.git /opt/crackmapexec && cd /opt/crackmapexec && pip3 install .",
+        "install_cmd": "rm -rf /opt/crackmapexec && git clone --depth 1 https://github.com/byt3bl33d3r/CrackMapExec.git /opt/crackmapexec && cd /opt/crackmapexec && pip3 install .",
         "verify_cmd": "crackmapexec --version",
         "description": "Network authentication cracking"
       },
@@ -352,7 +352,7 @@
         "enabled": true,
         "type": "apt",
         "install_cmd": "apt install -y john",
-        "verify_cmd": "john --version",
+        "verify_cmd": "which john",
         "description": "John the Ripper password cracker"
       },
       "hashcat": {
@@ -366,7 +366,7 @@
         "enabled": true,
         "type": "apt",
         "install_cmd": "apt install -y hydra",
-        "verify_cmd": "hydra -h",
+        "verify_cmd": "which hydra",
         "description": "Network logon cracker"
       }
     }
@@ -418,7 +418,7 @@
         "enabled": true,
         "type": "apt",
         "install_cmd": "apt install -y reaver",
-        "verify_cmd": "reaver -h",
+        "verify_cmd": "which reaver",
         "description": "WPS attack tool"
       }
     }
@@ -437,7 +437,7 @@
         "enabled": true,
         "type": "apt",
         "install_cmd": "apt install -y exploitdb",
-        "verify_cmd": "searchsploit --help",
+        "verify_cmd": "which searchsploit",
         "description": "Exploit database"
       }
     }
@@ -448,7 +448,7 @@
       "setoolkit": {
         "enabled": true,
         "type": "custom",
-        "install_cmd": "git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit.git /opt/set && cd /opt/set && pip3 install -r requirements.txt && python3 setup.py install",
+        "install_cmd": "rm -rf /opt/set && git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit.git /opt/set && cd /opt/set && pip3 install -r requirements.txt && python3 setup.py install",
         "verify_cmd": "test -d /opt/set",
         "description": "Social engineering toolkit"
       },
@@ -475,7 +475,7 @@
         "enabled": true,
         "type": "apt",
         "install_cmd": "apt install -y gobuster",
-        "verify_cmd": "gobuster version",
+        "verify_cmd": "which gobuster",
         "description": "Directory/file brute-forcing"
       },
       "feroxbuster": {
@@ -503,13 +503,13 @@
         "enabled": true,
         "type": "apt",
         "install_cmd": "apt install -y masscan",
-        "verify_cmd": "masscan --version",
+        "verify_cmd": "which masscan",
         "description": "Fast TCP port scanner"
       },
       "testssl": {
         "enabled": true,
         "type": "custom",
-        "install_cmd": "git clone --depth 1 https://github.com/drwetter/testssl.sh.git /opt/testssl",
+        "install_cmd": "rm -rf /opt/testssl && git clone --depth 1 https://github.com/drwetter/testssl.sh.git /opt/testssl",
         "verify_cmd": "test -f /opt/testssl/testssl.sh",
         "description": "TLS/SSL testing tool"
       },

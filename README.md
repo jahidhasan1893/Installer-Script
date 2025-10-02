@@ -55,3 +55,19 @@ source ~/.zshrc
 ```
 
 An installation report will be generated at `install_report.txt` in the script's directory.
+
+## Verification
+
+A verification script is included to check the status of the installed tools. To use it, first make it executable:
+
+```bash
+chmod +x verify_tools.sh
+```
+
+Then, run the script:
+
+```bash
+./verify_tools.sh
+```
+
+The script will read the `tools_config.json` file and report which tools are installed and which are not, based on their `verify_cmd`.
