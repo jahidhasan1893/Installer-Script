@@ -5,7 +5,9 @@
 set -euo pipefail
 
 # Configuration
-readonly CONFIG_FILE="tools_config.json"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly CONFIG_FILE="$SCRIPT_DIR/tools_config.json"
+USER_HOME="$HOME"
 
 # Counters
 TOTAL_TOOLS=0
@@ -53,6 +55,28 @@ source_shell_config() {
             fi
             ;;
     esac
+
+    # Add common tool paths as a fallback
+    export PATH="$PATH:/usr/local/go/bin:$HOME/go/bin:$HOME/.local/bin"
+}
+
+# Activate virtual environment if it exists
+activate_venv() {
+    local venv_path_template
+    venv_path_template=$(jq -r '.script_config.venv_path // empty' "$CONFIG_FILE")
+    
+    if [ -z "$venv_path_template" ]; then
+        return
+    fi
+    
+    local venv_path
+    venv_path=$(eval echo "$venv_path_template")
+    
+    if [ -f "$venv_path/bin/activate" ]; then
+        echo "INFO: Activating virtual environment at $venv_path" >&2
+        # shellcheck disable=SC1090
+        source "$venv_path/bin/activate"
+    fi
 }
 
 # Verify a single tool
@@ -86,7 +110,7 @@ verify_tools_from_config() {
         fi
 
         local category_enabled
-        category_enabled=$(jq -r --arg cat "$category" '.[$cat].enabled' "$CONFIG_FILE")
+        category_enabled=$(jq -r --arg cat "$category" '.[$cat].enabled // false' "$CONFIG_FILE")
         
         if [ "$category_enabled" != "true" ]; then
             continue
@@ -99,7 +123,7 @@ verify_tools_from_config() {
         
         for tool in $tools; do
             local tool_enabled
-            tool_enabled=$(jq -r --arg cat "$category" --arg t "$tool" '.[$cat].tools[$t].enabled' "$CONFIG_FILE")
+            tool_enabled=$(jq -r --arg cat "$category" --arg t "$tool" '.[$cat].tools[$t].enabled // false' "$CONFIG_FILE")
             
             if [ "$tool_enabled" != "true" ]; then
                 continue
@@ -120,8 +144,14 @@ main() {
     print_banner
     ensure_jq
     source_shell_config
+    activate_venv
     verify_tools_from_config
     
+    # Deactivate venv if it was activated
+    if [ -n "$VIRTUAL_ENV" ]; then
+        deactivate &>/dev/null || true
+    fi
+
     # Final summary
     echo -e "\n========================================"
     echo -e "Verification Complete!"
