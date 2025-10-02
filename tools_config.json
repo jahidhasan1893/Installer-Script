@@ -1,0 +1,525 @@
+{
+  "script_config": {
+    "min_disk_space_gb": 5,
+    "github_config_url": "https://raw.githubusercontent.com/yourusername/pentest-installer/main/tools_config.json",
+    "required_cmds": ["wget", "tar", "git", "jq"],
+    "go_info": {
+      "example_versions": "1.25.1, 1.24.5",
+      "versions_url": "https://go.dev/dl/",
+      "download_url_template": "https://go.dev/dl/go<VERSION>.linux-amd64.tar.gz"
+    },
+    "python_info": {
+      "example_versions": "3.13.7, 3.12.4",
+      "versions_url": "https://www.python.org/downloads/",
+      "download_url_template": "https://www.python.org/ftp/python/<VERSION>/Python-<VERSION>.tar.xz",
+      "build_dependencies": [
+        "build-essential", "libssl-dev", "zlib1g-dev", "libbz2-dev",
+        "libreadline-dev", "libsqlite3-dev", "curl", "libncursesw5-dev",
+        "xz-utils", "tk-dev", "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev"
+      ]
+    },
+    "venv_path": "$USER_HOME/pentest-venv"
+  },
+  "web_application": {
+    "enabled": true,
+    "tools": {
+      "nuclei": {
+        "enabled": true,
+        "type": "go",
+        "install_cmd": "go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest",
+        "verify_cmd": "nuclei -version",
+        "description": "Modern vulnerability scanner"
+      },
+      "ffuf": {
+        "enabled": true,
+        "type": "go",
+        "install_cmd": "go install github.com/ffuf/ffuf/v2@latest",
+        "verify_cmd": "ffuf -V",
+        "description": "Fast web fuzzer"
+      },
+      "arjun": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "git clone --depth 1 https://github.com/s0md3v/arjun.git /opt/arjun && cd /opt/arjun && pip3 install .",
+        "verify_cmd": "arjun --help",
+        "description": "HTTP parameter discovery"
+      },
+      "paramspider": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "git clone --depth 1 https://github.com/devanshbatham/ParamSpider.git /opt/paramspider && cd /opt/paramspider && pip3 install .",
+        "verify_cmd": "paramspider --help",
+        "description": "Parameter mining tool"
+      },
+      "dalfox": {
+        "enabled": true,
+        "type": "go",
+        "install_cmd": "go install github.com/hahwul/dalfox/v2@latest",
+        "verify_cmd": "dalfox version",
+        "description": "XSS vulnerability scanner"
+      },
+      "sqlmap": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install sqlmap",
+        "verify_cmd": "sqlmap --version",
+        "description": "SQL injection detection and exploitation"
+      },
+      "wpscan": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y wpscan",
+        "verify_cmd": "wpscan --version",
+        "description": "WordPress security scanner"
+      }
+    }
+  },
+  "reconnaissance": {
+    "enabled": true,
+    "tools": {
+      "subfinder": {
+        "enabled": true,
+        "type": "go",
+        "install_cmd": "go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest",
+        "verify_cmd": "subfinder -version",
+        "description": "Subdomain discovery tool"
+      },
+      "assetfinder": {
+        "enabled": true,
+        "type": "go",
+        "install_cmd": "go install github.com/tomnomnom/assetfinder@latest",
+        "verify_cmd": "assetfinder --help",
+        "description": "Domain enumeration tool"
+      },
+      "amass": {
+        "enabled": true,
+        "type": "go",
+        "install_cmd": "go install -v github.com/owasp-amass/amass/v4/...@master",
+        "verify_cmd": "amass -version",
+        "description": "Attack surface mapping"
+      },
+      "httpx": {
+        "enabled": true,
+        "type": "go",
+        "install_cmd": "go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest",
+        "verify_cmd": "httpx -version",
+        "description": "HTTP toolkit"
+      },
+      "waybackurls": {
+        "enabled": true,
+        "type": "go",
+        "install_cmd": "go install github.com/tomnomnom/waybackurls@latest",
+        "verify_cmd": "waybackurls --help",
+        "description": "Fetch URLs from Wayback Machine"
+      },
+      "gau": {
+        "enabled": true,
+        "type": "go",
+        "install_cmd": "go install github.com/lc/gau/v2/cmd/gau@latest",
+        "verify_cmd": "gau --help",
+        "description": "Get All URLs from multiple sources"
+      },
+      "katana": {
+        "enabled": true,
+        "type": "go",
+        "install_cmd": "go install github.com/projectdiscovery/katana/cmd/katana@latest",
+        "verify_cmd": "katana -version",
+        "description": "Next-generation crawling and spidering"
+      },
+      "naabu": {
+        "enabled": true,
+        "type": "go",
+        "install_cmd": "go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest",
+        "verify_cmd": "naabu -version",
+        "description": "Fast port scanner"
+      }
+    }
+  },
+  "cloud_security": {
+    "enabled": true,
+    "tools": {
+      "prowler": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install prowler",
+        "verify_cmd": "prowler -v",
+        "description": "AWS/Azure/GCP security tool"
+      },
+      "scoutsuite": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install scoutsuite",
+        "verify_cmd": "scout --version",
+        "description": "Multi-cloud security auditing"
+      },
+      "pacu": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install pacu",
+        "verify_cmd": "pacu --help",
+        "description": "AWS exploitation framework"
+      },
+      "cloudsploit": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "git clone --depth 1 https://github.com/aquasecurity/cloudsploit.git /opt/cloudsploit && cd /opt/cloudsploit && npm install",
+        "verify_cmd": "test -d /opt/cloudsploit",
+        "description": "Cloud security and compliance scanning"
+      }
+    }
+  },
+  "active_directory": {
+    "enabled": true,
+    "tools": {
+      "certipy": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install certipy-ad",
+        "verify_cmd": "certipy --version",
+        "description": "AD Certificate Services attacks"
+      },
+      "coercer": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install coercer",
+        "verify_cmd": "coercer --help",
+        "description": "AD coercion techniques"
+      },
+      "donpapi": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install donpapi",
+        "verify_cmd": "donpapi --help",
+        "description": "Extract secrets from Windows"
+      },
+      "bloodhound": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install bloodhound",
+        "verify_cmd": "bloodhound-python --help",
+        "description": "AD attack path analysis"
+      }
+    }
+  },
+  "network_tools": {
+    "enabled": true,
+    "tools": {
+      "bettercap": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y bettercap",
+        "verify_cmd": "bettercap --version",
+        "description": "Network attack and monitoring"
+      },
+      "mitm6": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install mitm6",
+        "verify_cmd": "mitm6 --help",
+        "description": "IPv6 attack tool"
+      },
+      "responder": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "git clone --depth 1 https://github.com/lgandx/Responder.git /opt/Responder",
+        "verify_cmd": "test -f /opt/Responder/Responder.py",
+        "description": "LLMNR/NBT-NS/MDNS poisoner"
+      },
+      "enum4linux-ng": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "git clone --depth 1 https://github.com/cddmp/enum4linux-ng.git /opt/enum4linux-ng && cd /opt/enum4linux-ng && pip3 install .",
+        "verify_cmd": "enum4linux-ng --help",
+        "description": "Windows/Samba enumeration"
+      }
+    }
+  },
+  "binary_analysis": {
+    "enabled": true,
+    "tools": {
+      "pwntools": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install pwntools",
+        "verify_cmd": "python3 -c 'import pwn'",
+        "description": "CTF/exploit development framework"
+      },
+      "ropgadget": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install ropgadget",
+        "verify_cmd": "ROPgadget --version",
+        "description": "ROP chain builder"
+      },
+      "radare2": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y radare2",
+        "verify_cmd": "radare2 -v",
+        "description": "Reverse engineering framework"
+      },
+      "ghidra": {
+        "enabled": false,
+        "type": "custom",
+        "install_cmd": "echo 'Ghidra requires manual installation from https://ghidra-sre.org/'",
+        "verify_cmd": "test -d /opt/ghidra",
+        "description": "Software reverse engineering suite"
+      }
+    }
+  },
+  "api_testing": {
+    "enabled": true,
+    "tools": {
+      "kiterunner": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "git clone --depth 1 https://github.com/assetnote/kiterunner.git /opt/kiterunner && cd /opt/kiterunner && make build && ln -sf /opt/kiterunner/dist/kr /usr/local/bin/kr",
+        "verify_cmd": "kr --help",
+        "description": "API endpoint discovery"
+      },
+      "postman-cli": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "curl -o- 'https://dl-cli.pstmn.io/install/linux64.sh' | sh",
+        "verify_cmd": "postman --version",
+        "description": "API testing and development"
+      },
+      "jwt_tool": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "git clone --depth 1 https://github.com/ticarpi/jwt_tool.git /opt/jwt_tool && cd /opt/jwt_tool && pip3 install -r requirements.txt && ln -s /opt/jwt_tool/jwt_tool.py /usr/local/bin/jwt_tool",
+        "verify_cmd": "jwt_tool --help",
+        "description": "Toolkit for validating, forging, scanning and tampering JWTs"
+      }
+    }
+  },
+  "container_security": {
+    "enabled": true,
+    "tools": {
+      "trivy": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor -o /usr/share/keyrings/trivy.gpg && echo 'deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main' | tee /etc/apt/sources.list.d/trivy.list && apt update && apt install -y trivy",
+        "verify_cmd": "trivy --version",
+        "description": "Container vulnerability scanner"
+      },
+      "docker-bench-security": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "git clone --depth 1 https://github.com/docker/docker-bench-security.git /opt/docker-bench-security",
+        "verify_cmd": "test -f /opt/docker-bench-security/docker-bench-security.sh",
+        "description": "Docker security auditing"
+      }
+    }
+  },
+  "mobile_security": {
+    "enabled": true,
+    "tools": {
+      "objection": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install objection",
+        "verify_cmd": "objection --help",
+        "description": "Runtime mobile exploration"
+      },
+      "frida": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install frida-tools",
+        "verify_cmd": "frida --version",
+        "description": "Dynamic instrumentation toolkit"
+      },
+      "mobsf": {
+        "enabled": false,
+        "type": "pip",
+        "install_cmd": "pip3 install mobsf",
+        "verify_cmd": "mobsf --help",
+        "description": "Mobile security framework (requires Docker)"
+      }
+    }
+  },
+  "password_tools": {
+    "enabled": true,
+    "tools": {
+      "crackmapexec": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "git clone --depth 1 https://github.com/byt3bl33d3r/CrackMapExec.git /opt/crackmapexec && cd /opt/crackmapexec && pip3 install .",
+        "verify_cmd": "crackmapexec --version",
+        "description": "Network authentication cracking"
+      },
+      "john": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y john",
+        "verify_cmd": "john --version",
+        "description": "John the Ripper password cracker"
+      },
+      "hashcat": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y hashcat",
+        "verify_cmd": "hashcat --version",
+        "description": "Advanced password recovery"
+      },
+      "hydra": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y hydra",
+        "verify_cmd": "hydra -h",
+        "description": "Network logon cracker"
+      }
+    }
+  },
+  "web_proxies": {
+    "enabled": true,
+    "tools": {
+      "burpsuite": {
+        "enabled": false,
+        "type": "custom",
+        "install_cmd": "echo 'BurpSuite requires manual installation from https://portswigger.net/burp'",
+        "verify_cmd": "test -f /opt/burpsuite/burpsuite",
+        "description": "Web application security testing"
+      },
+      "caido": {
+        "enabled": false,
+        "type": "custom",
+        "install_cmd": "echo 'Caido requires manual installation from https://caido.io/'",
+        "verify_cmd": "test -f /usr/local/bin/caido",
+        "description": "Modern web security toolkit"
+      },
+      "mitmproxy": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install mitmproxy",
+        "verify_cmd": "mitmproxy --version",
+        "description": "Interactive HTTPS proxy"
+      }
+    }
+  },
+  "wireless_tools": {
+    "enabled": true,
+    "tools": {
+      "aircrack-ng": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y aircrack-ng",
+        "verify_cmd": "aircrack-ng --help",
+        "description": "WiFi security auditing suite"
+      },
+      "wifite": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y wifite",
+        "verify_cmd": "wifite --help",
+        "description": "Automated wireless attack tool"
+      },
+      "reaver": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y reaver",
+        "verify_cmd": "reaver -h",
+        "description": "WPS attack tool"
+      }
+    }
+  },
+  "exploit_frameworks": {
+    "enabled": true,
+    "tools": {
+      "metasploit": {
+        "enabled": false,
+        "type": "custom",
+        "install_cmd": "curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > /tmp/msfinstall && chmod 755 /tmp/msfinstall && /tmp/msfinstall",
+        "verify_cmd": "msfconsole --version",
+        "description": "Penetration testing framework"
+      },
+      "exploitdb": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y exploitdb",
+        "verify_cmd": "searchsploit --help",
+        "description": "Exploit database"
+      }
+    }
+  },
+  "social_engineering": {
+    "enabled": true,
+    "tools": {
+      "setoolkit": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit.git /opt/set && cd /opt/set && pip3 install -r requirements.txt && python3 setup.py install",
+        "verify_cmd": "test -d /opt/set",
+        "description": "Social engineering toolkit"
+      },
+      "gophish": {
+        "enabled": false,
+        "type": "custom",
+        "install_cmd": "wget https://github.com/gophish/gophish/releases/download/v0.12.1/gophish-v0.12.1-linux-64bit.zip -O /tmp/gophish.zip && unzip /tmp/gophish.zip -d /opt/gophish && chmod +x /opt/gophish/gophish",
+        "verify_cmd": "test -f /opt/gophish/gophish",
+        "description": "Open-source phishing toolkit"
+      }
+    }
+  },
+  "miscellaneous": {
+    "enabled": true,
+    "tools": {
+      "seclists": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "rm -rf /usr/share/seclists && git clone --depth 1 https://github.com/danielmiessler/SecLists.git /usr/share/seclists",
+        "verify_cmd": "test -d /usr/share/seclists",
+        "description": "Security testing wordlists"
+      },
+      "gobuster": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y gobuster",
+        "verify_cmd": "gobuster version",
+        "description": "Directory/file brute-forcing"
+      },
+      "feroxbuster": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y feroxbuster",
+        "verify_cmd": "feroxbuster --version",
+        "description": "Fast content discovery"
+      },
+      "nikto": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y nikto",
+        "verify_cmd": "nikto -Version",
+        "description": "Web server scanner"
+      },
+      "nmap": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y nmap",
+        "verify_cmd": "nmap --version",
+        "description": "Network exploration and security auditing"
+      },
+      "masscan": {
+        "enabled": true,
+        "type": "apt",
+        "install_cmd": "apt install -y masscan",
+        "verify_cmd": "masscan --version",
+        "description": "Fast TCP port scanner"
+      },
+      "testssl": {
+        "enabled": true,
+        "type": "custom",
+        "install_cmd": "git clone --depth 1 https://github.com/drwetter/testssl.sh.git /opt/testssl",
+        "verify_cmd": "test -f /opt/testssl/testssl.sh",
+        "description": "TLS/SSL testing tool"
+      },
+      "ssh-audit": {
+        "enabled": true,
+        "type": "pipx",
+        "install_cmd": "pipx install ssh-audit",
+        "verify_cmd": "ssh-audit --help",
+        "description": "SSH server auditing"
+      }
+    }
+  }
+}
